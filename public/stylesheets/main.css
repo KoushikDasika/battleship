@@ -1,0 +1,12 @@
+.grid {
+  font-family: 'Courier New';
+  font-size: 200%;
+}
+
+td, th {
+  padding-right: 50px;
+}
+
+h1 {
+  padding-left: 150px;
+}

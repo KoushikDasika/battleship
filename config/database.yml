@@ -1,0 +1,23 @@
+development:
+  adapter: mysql
+  encoding: utf8
+  database: battleship
+  pool: 5
+  username: battleship
+  password: battle.ship!
+
+test:
+  adapter: mysql
+  encoding: utf8
+  database: battleship
+  pool: 5
+  username: battleship
+  password: battle.ship!
+
+production:
+  adapter: mysql
+  encoding: utf8
+  database: battleship
+  pool: 5
+  username: battleship
+  password: battle.ship!

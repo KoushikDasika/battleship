@@ -1,0 +1,26 @@
+<table>
+  <tr>
+    <th>CPU</th>
+    <th>Player</th>
+  </tr>
+  <tr>
+    <td>
+      <div id='cpu_board' class='grid'>
+        <% @game.cpu_board.gsub(/\d/, '+').scan(/.{10}/).each do |line| %>
+          <%= line %><br/>
+        <% end %>
+      </div>
+    </td>
+    <td>
+      <div id='player_board' class='grid'>
+        <% @game.player_board.scan(/.{10}/).each do |line| %>
+          <%= line %><br/>
+        <% end %>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td><div id='player_message'></div></td>
+    <td><div id='cpu_message'></div></td>
+  </tr>
+</table>

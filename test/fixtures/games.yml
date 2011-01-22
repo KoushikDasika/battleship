@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  session_id: 
+  player_board: 
+  cpu_board: 
+  player_ships: 
+  cpu_ships: MyString
+
+two:
+  session_id: 
+  player_board: 
+  cpu_board: 
+  player_ships: 
+  cpu_ships: MyString
