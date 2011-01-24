@@ -1,7 +1,14 @@
-//first set the class of the shot grid squares
-$('#p<%= @cLoc %>').attr('class', 'grid<%= @game.player_board[@cLoc] %>');
+//set the player's message and result
 $('#<%= @pLoc %>').attr('class', 'grid<%= @game.cpu_board[@pLoc] %>');
-
-//show messages for both players
 $('#player_message').html('<%= @pMes %>');
-$('#cpu_message').html('<%= @cMes %>');
+
+//set the cpu message and result if there was one
+<% if @cLoc %>
+  $('#p<%= @cLoc %>').attr('class', 'grid<%= @game.player_board[@cLoc] %>');
+  $('#cpu_message').html('<%= @cMes %>');
+<% end %>
+
+//if the game ends, disable clicking
+<% if @pMes =~ /over/ or @cMes =~ /over/ %>
+  $('.shoot').unbind('click');
+<% end %>
