@@ -1,5 +1,5 @@
 development:
-  adapter: mysql
+  adapter: mysql2
   encoding: utf8
   database: battleship
   pool: 5
@@ -7,7 +7,7 @@ development:
   password: battle.ship!
 
 test:
-  adapter: mysql
+  adapter: mysql2
   encoding: utf8
   database: battleship
   pool: 5
@@ -15,7 +15,7 @@ test:
   password: battle.ship!
 
 production:
-  adapter: mysql
+  adapter: mysql2
   encoding: utf8
   database: battleship
   pool: 5
