@@ -2,6 +2,7 @@ Battleship::Application.routes.draw do
   match 'game' => 'game#index'
   match 'game/shoot' => 'game#shoot'
   match 'game/delete' => 'game#delete'
+  root :to => 'game#index'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

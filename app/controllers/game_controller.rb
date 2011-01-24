@@ -10,7 +10,7 @@ class GameController < ApplicationController
     end
   end
 
-  #called by remote form in index. shoots the desired grid square.
+  #called by ajax post when a grid square is clicked
   def shoot
     @game = Game.find(params[:game_id])
     @player_message = @game.shoot(params[:coord]) #player shoots
