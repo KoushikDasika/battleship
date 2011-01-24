@@ -14,7 +14,7 @@ class GameController < ApplicationController
   def shoot
     @game = Game.find(params[:game_id])
     @player_message = @game.shoot(params[:coord]) #player shoots
-    #@cpu_message = ''
+    #if the game isn't over and the player didn't do a repeat, the cpu shoots
     if not (@player_message =~ /over/) and not (@player_message =~ /already/)
       @cpu_message = @game.shoot
     end

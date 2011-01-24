@@ -1,12 +1,25 @@
-.grid {
+.board td { border: 1px solid black; }
+
+.grid td {
   font-family: 'Courier New';
-  font-size: 200%;
+  text-align: center;
+  width: 30px;
+  height: 30px;
+  border: none;
 }
 
-td, th {
-  padding-right: 50px;
-}
+.gridO {background-color: blue;}
 
-h1 {
-  padding-left: 150px;
-}
+.gridM {background-color: DodgerBlue;}
+
+.gridH {background-color: red;}
+
+.grid0 {background-color: DarkOrchid;}
+
+.grid1 {background-color: SpringGreen;}
+
+.grid2 {background-color: DarkOrange;}
+
+.grid3 {background-color: Gold;}
+
+.grid4 {background-color: fuchsia;}

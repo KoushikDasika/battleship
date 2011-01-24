@@ -25,7 +25,7 @@ class Game < ActiveRecord::Base
     if symbol =~ /[0-4]/ #if symbol is a ship
       board[location] = 'H' #mark a hit
       output << ship_hit(symbol.to_i, ships)
-    elsif symbol == '+' #if the symbol is an open spot
+    elsif symbol == 'O' #if the symbol is an open spot
       board[location] = 'M' #mark a miss
       output << 'Miss.'
     else
@@ -34,7 +34,7 @@ class Game < ActiveRecord::Base
 
     #check for remaining ships
     if (board =~ /\d/).nil?
-        output << ' Game over!'
+        output << ' Game over! Refresh to play again.'
     end
 
     #set the oponents board to its new state
@@ -74,21 +74,50 @@ class Game < ActiveRecord::Base
 
   #automatically places ships
   def generate_board
-    '00111222++333344444+' + '+' * 80
-  end
-
-  #the cpu's shooting strategy
-  def cpu_shot
-    location = 0
-    player_board.each_char do |c|
-      if c != 'M' and c != 'H'
-        break
-      else
-        location += 1
+    board = 'O' * 100
+    ship_hash = {0 => 2, 1 => 3, 2 => 3, 3 => 4, 4 => 5} #ship sybol => size
+    directions = [10, -10, 1, -1] #possible ship orientations
+    ship_hash.each do |symbol, size|
+      while true
+        first = rand(100) #look for an opening at which to start
+        if board[first] != 'O'
+          next
+        end
+        spaces = [first] #keep track of the spaces the ship will occupy
+        direction = directions[rand(3)] #choose a random orientation
+        last = first + direction * (size-1) #end of the ship
+        #make sure the end is within the board
+        if last > 99 or last < 0 or board[last] != 'O'
+          next
+        elsif direction.abs == 1 and last/10 != first/10
+          next
+        elsif direction.abs == 10 and last%10 != first%10
+          next
+        end
+        #make sure the space between the start and is empty
+        (2..size).each do |spot|
+          if board[first+direction*(spot-1)] == 'O'
+            spaces << first+direction*(spot-1)
+          else
+            break
+          end
+        end
+        if spaces.size == size #all the space is free, so place the ship
+          spaces.each { |space| board[space] = symbol.to_s }
+          break
+        else #the space wasn't free, so try again
+          next
+        end
       end
     end
-    puts location
-    return location
+    return board
+  end
+
+  #the cpu's shooting strategy. right now the cpu checks all spaces sequentially.
+  def cpu_shot
+    player_board.scan(/./).each_with_index do |symbol, i|
+      return i if symbol != 'M' and symbol != 'H'
+    end
   end
 
 end

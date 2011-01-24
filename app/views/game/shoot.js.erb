@@ -1,5 +1,3 @@
-$('grids').update('<%= escape_javascript(render(:partial => 'grids')) %>');
-$('player_message').update('<%= @player_message %>');
-$('cpu_message').update('<%= @cpu_message %>');
-Field.clear($('coord'));
-Field.activate($('coord'));
+$('#grids').html('<%= escape_javascript(render(:partial => 'grids')) %>');
+$('#player_message').html('<%= @player_message %>');
+$('#cpu_message').html('<%= @cpu_message %>');

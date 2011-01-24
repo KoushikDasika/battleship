@@ -3,11 +3,3 @@
 <div id='grids'>
   <%= render :partial => 'grids' %>
 </div>
-
-<br/>
-
-<%= form_tag('/game/shoot', :remote => true) do %>
-  <%= hidden_field_tag :game_id, @game.id %>
-  Target: <%= text_field_tag :coord %>
-  <%= submit_tag 'Shoot' %>
-<% end %>

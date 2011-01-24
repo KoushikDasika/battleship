@@ -1,7 +1,7 @@
 Battleship::Application.routes.draw do
   match 'game' => 'game#index'
   match 'game/shoot' => 'game#shoot'
-  match 'game/grids/:id' => 'game#grids'
+  match 'game/delete' => 'game#delete'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
