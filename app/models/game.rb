@@ -3,7 +3,7 @@ class Game < ActiveRecord::Base
   before_create :set_vars
 
   #takes a shot at the grid square specified by coord. if no coordinates are
-  #given, the cpu shoots at the player.
+  #given, the cpu shoots at the player. returns a message and the shot location.
   def shoot(*coord)
     location = 0 #shot location
     ships = '' #ship hitpoints
@@ -46,7 +46,7 @@ class Game < ActiveRecord::Base
       self.player_board = board
     end
 
-    return output
+    return [output, location]
   end
 
   private

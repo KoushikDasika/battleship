@@ -1,3 +1,7 @@
-$('#grids').html('<%= escape_javascript(render(:partial => 'grids')) %>');
-$('#player_message').html('<%= @player_message %>');
-$('#cpu_message').html('<%= @cpu_message %>');
+//first set the class of the shot grid squares
+$('#p<%= @cLoc %>').attr('class', 'grid<%= @game.player_board[@cLoc] %>');
+$('#<%= @pLoc %>').attr('class', 'grid<%= @game.cpu_board[@pLoc] %>');
+
+//show messages for both players
+$('#player_message').html('<%= @pMes %>');
+$('#cpu_message').html('<%= @cMes %>');
