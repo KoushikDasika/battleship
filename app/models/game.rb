@@ -72,45 +72,62 @@ class Game < ActiveRecord::Base
     self.player_board = generate_board
   end
 
-  #automatically places ships
+  #automatically places ships. each ship is placed by selecting a random
+  #grid square and then using that square as a pivot point. All possible
+  #orientations are tried, and if one is found that doesn't conflict with
+  #another ship, the ship is placed. Otherwise, a new pivot is tried.
   def generate_board
     board = 'O' * 100
     ship_hash = {0 => 2, 1 => 3, 2 => 3, 3 => 4, 4 => 5} #ship sybol => size
-    directions = [10, -10, 1, -1] #possible ship orientations
     ship_hash.each do |symbol, size|
       while true
-        first = rand(100) #look for an opening at which to start
-        if board[first] != 'O'
-          next
+        #find a free pivot point
+        pivot = rand(100)
+        while board[pivot] != 'O'
+          pivot = rand(100)
         end
-        spaces = [first] #keep track of the spaces the ship will occupy
-        direction = directions[rand(3)] #choose a random orientation
-        last = first + direction * (size-1) #end of the ship
-        #make sure the end is within the board
-        if last > 99 or last < 0 or board[last] != 'O'
-          next
-        elsif direction.abs == 1 and last/10 != first/10
-          next
-        elsif direction.abs == 10 and last%10 != first%10
-          next
-        end
-        #make sure the space between the start and is empty
-        (2..size).each do |spot|
-          if board[first+direction*(spot-1)] == 'O'
-            spaces << first+direction*(spot-1)
+        #figure out possible ship orientations based on the start point
+        directions = [10, -10, 1, -1] #down, up, right, left
+        #can it go left?
+        directions.delete(-1) if (pivot-size-1)/10 < pivot/10 or (pivot-size-1) < 0
+        #right?
+        directions.delete(1) if (pivot+size-1)/10 > pivot/10
+        #up?
+        directions.delete(-10) if (pivot-10*(size-1)) < 0
+        #down?
+        directions.delete(10) if (pivot+10*(size-1)) > 99
+
+        while not directions.empty? #try all possible orientations
+          direction = directions[rand(directions.size-1)]
+          ship = (0..size-1).collect{ |i| pivot+i*direction }
+          if conflict(ship, board)
+            directions.delete(direction)
           else
-            break
+            break #no conflict, so place the ship
           end
         end
-        if spaces.size == size #all the space is free, so place the ship
-          spaces.each { |space| board[space] = symbol.to_s }
+
+        if directions.empty?
+          next #no possible orientations, so try again
+        else
+          #place the ships symbols on the board
+          ship.each{ |loc| board[loc] = symbol.to_s }
           break
-        else #the space wasn't free, so try again
-          next
         end
       end
     end
     return board
+  end
+
+  #returns true if the proposed ship location conflicts with another ship
+  def conflict(ship, board)
+    if ship.empty?
+      return true
+    end
+    ship.each do |loc|
+      return true if board[loc] =~ /\d/
+    end
+    return false
   end
 
   #the cpu's shooting strategy. right now the cpu checks all spaces sequentially.
