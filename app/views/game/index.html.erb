@@ -1,3 +1,13 @@
+<% content_for :head do %>
+  <script>
+    $(document).ready(function() {
+      $('.shoot').click(function() {
+        $.post('/game/shoot', {game_id: '<%= @game.id %>', coord: this.id});
+     });
+    });
+  </script>
+<% end %>
+
 <h1>Battleship</h1>
 
 <table class='board'>
@@ -34,9 +44,3 @@
     <td id='cpu_message'></td>
   </tr>
 </table>
-
-<script>
-  $('.shoot').click(function() {
-    $.post('/game/shoot', {game_id: '<%= @game.id %>', coord: this.id});
-  });
-</script>
