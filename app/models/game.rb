@@ -74,42 +74,43 @@ class Game < ActiveRecord::Base
 
   #automatically places ships
   def generate_board
-    board = 'O' * 100
-    ship_hash = {0 => 2, 1 => 3, 2 => 3, 3 => 4, 4 => 5} #ship sybol => size
-    directions = [10, -10, 1, -1] #possible ship orientations
-    ship_hash.each do |symbol, size|
-      while true
-        first = rand(100) #look for an opening at which to start
-        if board[first] != 'O'
-          next
-        end
-        spaces = [first] #keep track of the spaces the ship will occupy
-        direction = directions[rand(3)] #choose a random orientation
-        last = first + direction * (size-1) #end of the ship
-        #make sure the end is within the board
-        if last > 99 or last < 0 or board[last] != 'O'
-          next
-        elsif direction.abs == 1 and last/10 != first/10
-          next
-        elsif direction.abs == 10 and last%10 != first%10
-          next
-        end
-        #make sure the space between the start and is empty
-        (2..size).each do |spot|
-          if board[first+direction*(spot-1)] == 'O'
-            spaces << first+direction*(spot-1)
-          else
-            break
-          end
-        end
-        if spaces.size == size #all the space is free, so place the ship
-          spaces.each { |space| board[space] = symbol.to_s }
-          break
-        else #the space wasn't free, so try again
-          next
-        end
-      end
-    end
+#    board = 'O' * 100
+#    ship_hash = {0 => 2, 1 => 3, 2 => 3, 3 => 4, 4 => 5} #ship sybol => size
+#    directions = [10, -10, 1, -1] #possible ship orientations
+#    ship_hash.each do |symbol, size|
+#      while true
+#        first = rand(100) #look for an opening at which to start
+#        if board[first] != 'O'
+#          next
+#        end
+#        spaces = [first] #keep track of the spaces the ship will occupy
+#        direction = directions[rand(3)] #choose a random orientation
+#        last = first + direction * (size-1) #end of the ship
+#        #make sure the end is within the board
+#        if last > 99 or last < 0 or board[last] != 'O'
+#          next
+#        elsif direction.abs == 1 and last/10 != first/10
+#          next
+#        elsif direction.abs == 10 and last%10 != first%10
+#          next
+#        end
+#        #make sure the space between the start and is empty
+#        (2..size).each do |spot|
+#          if board[first+direction*(spot-1)] == 'O'
+#            spaces << first+direction*(spot-1)
+#          else
+#            break
+#          end
+#        end
+#        if spaces.size == size #all the space is free, so place the ship
+#          spaces.each { |space| board[space] = symbol.to_s }
+#          break
+#        else #the space wasn't free, so try again
+#          next
+#        end
+#      end
+#    end
+    board = '00111222OO333344444O' + 'O'*80
     return board
   end
 
