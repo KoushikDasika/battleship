@@ -51,6 +51,21 @@ class Game < ActiveRecord::Base
 
   private
 
+  #set ship hitpoints and initial board layout
+  def set_vars
+    self.cpu_ships = '23345'
+    self.player_ships = '23345'
+    self.cpu_board = generate_board
+    self.player_board = generate_board
+  end
+
+  #the cpu's shooting strategy. right now the cpu checks all spaces sequentially.
+  def cpu_shot
+    player_board.scan(/./).each_with_index do |symbol, i|
+      return i if symbol != 'M' and symbol != 'H'
+    end
+  end
+
   #runs if a ship is hit
   def ship_hit(number, ships)
     #hash of ship numbers => names
@@ -62,14 +77,6 @@ class Game < ActiveRecord::Base
     outcome = ships[number] == '0' ? ' sunk!' : ' hit!'
     #return message
     return ship_hash[number] + outcome
-  end
-
-  #set ship hitpoints and initial board layout
-  def set_vars
-    self.cpu_ships = '23345'
-    self.player_ships = '23345'
-    self.cpu_board = generate_board
-    self.player_board = generate_board
   end
 
   #automatically places ships. each ship is placed by selecting a random
@@ -87,7 +94,7 @@ class Game < ActiveRecord::Base
           pivot = rand(100)
         end
         #figure out possible ship orientations based on the start point
-        directions = [10, -10, 1, -1] #down, up, right, left
+        directions = [-1, 1, -10, 10] #left, right, up, down
         #can it go left?
         directions.delete(-1) if (pivot-size-1)/10 < pivot/10 or (pivot-size-1) < 0
         #right?
@@ -128,13 +135,6 @@ class Game < ActiveRecord::Base
       return true if board[loc] =~ /\d/
     end
     return false
-  end
-
-  #the cpu's shooting strategy. right now the cpu checks all spaces sequentially.
-  def cpu_shot
-    player_board.scan(/./).each_with_index do |symbol, i|
-      return i if symbol != 'M' and symbol != 'H'
-    end
   end
 
 end
