@@ -2,7 +2,7 @@
 $('#<%= @pLoc %>').attr('class', 'grid<%= @game.cpu_board[@pLoc] %>');
 $('#player_message').html('<%= @pMes %>');
 
-//set the cpu message and result if there was one
+//set the cpu's message and result if there was one
 <% if @cLoc %>
   $('#p<%= @cLoc %>').attr('class', 'grid<%= @game.player_board[@cLoc] %>');
   $('#cpu_message').html('<%= @cMes %>');

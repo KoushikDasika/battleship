@@ -35,10 +35,8 @@
   </tr>
 </table>
 
-<% if not @player_message =~ /over/ and not @cpu_message =~ /over/ %>
-  <script>
-    $('.shoot').click(function() {
-      $.post('/game/shoot', {game_id: '<%= @game.id %>', coord: this.id});
-    });
-  </script>
-<% end %>
+<script>
+  $('.shoot').click(function() {
+    $.post('/game/shoot', {game_id: '<%= @game.id %>', coord: this.id});
+  });
+</script>
