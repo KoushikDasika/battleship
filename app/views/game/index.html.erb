@@ -8,39 +8,29 @@
   </script>
 <% end %>
 
-<h1>Battleship</h1>
+<div id='board'>
+  <div id='title'>Battleship</div>
 
-<table class='board'>
-  <tr>
-    <th>Cpu Board</th>
-    <th>Player Board</th>
-  </tr>
-  <tr>
-    <td>
-      <table class='grid'>
-        <% @game.cpu_board.gsub(/\d/, 'O').scan(/.{10}/).each_with_index do |line, i| %>
-          <tr>
-          <% line.scan(/./).each_with_index do |symbol, j| %>
-            <td id='<%= i*10+j %>' class='shoot grid<%= symbol %>'></td>
-          <% end %>
-          </tr>
-        <% end %>
-      </table>
-    </td>
-    <td>
-      <table class='grid'>
-        <% @game.player_board.scan(/.{10}/).each_with_index do |line, i| %>
-          <tr>
-          <% line.scan(/./).each_with_index do |symbol, j| %>
-            <td id='p<%= i*10+j %>' class='grid<%= symbol %>'></td>
-          <% end %>
-          </tr>
-        <% end %>
-      </table>
-    </td>
-  </tr>
-  <tr>
-    <td id='player_message'>Click the grid above to shoot.</td>
-    <td id='cpu_message'></td>
-  </tr>
-</table>
+  <table id='cpu_grid' class='grid'>
+    <% @game.cpu_board.gsub(/\d/, 'O').scan(/.{10}/).each_with_index do |line, i| %>
+      <tr>
+      <% line.scan(/./).each_with_index do |symbol, j| %>
+        <td id='<%= i*10+j %>' class='shoot grid<%= symbol %>'></td>
+      <% end %>
+      </tr>
+    <% end %>
+  </table>
+
+  <table id='player_grid' class='grid'>
+    <% @game.player_board.scan(/.{10}/).each_with_index do |line, i| %>
+      <tr>
+      <% line.scan(/./).each_with_index do |symbol, j| %>
+        <td id='p<%= i*10+j %>' class='grid<%= symbol %>'></td>
+      <% end %>
+      </tr>
+    <% end %>
+  </table>
+
+  <div id='player_message'>Click the grid above to shoot.</div>
+  <div id='cpu_message'></div>
+</div>

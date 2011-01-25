@@ -4,7 +4,7 @@
 <% end %>
 
 //set the player's message and result
-$('#<%= @pLoc %>').attr('class', 'grid<%= @game.cpu_board[@pLoc] %>');
+$('#<%= @pLoc %>').attr('class', 'shoot grid<%= @game.cpu_board[@pLoc] %>');
 $('#player_message').html('<%= @pMes %>');
 
 //set the cpu's message and result if there was one
